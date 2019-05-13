@@ -1,14 +1,13 @@
 import React from "react";
+import { getCourses, deleteCourse } from "./api/courseApi";
+import { toast } from "react-toastify";
 
 class CoursePage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      courses: [
-        { id: 1, title: "Horses for dummies", category: "Pets" },
-        { id: 2, title: "Clean code", category: "Programming" }
-      ],
+      courses: [],
       isAdmin: false
     };
 
@@ -16,21 +15,29 @@ class CoursePage extends React.Component {
     // this.handleDelete = this.handleDelete.bind(this);
   }
 
+  // Will run when component is mounted. (after constructor)
+  componentDidMount() {
+    getCourses().then(courses => {
+      this.setState({ courses: courses });
+    });
+  }
+
   handleDelete = event => {
     const idToDelete = event.target.name;
 
-    // Option 1: Object assign
-    // const coursesCopy = Object.assign([], this.state.courses);
+    deleteCourse(idToDelete)
+      .then(response => {
+        const courses = this.state.courses.filter(
+          course => course.id !== parseInt(idToDelete)
+        );
 
-    // Option 2: Object spread
-    // const courseCopy = [...this.state.courses];
-
-    // Option 3: Just use filter.
-    const courses = this.state.courses.filter(
-      course => course.id !== parseInt(idToDelete)
-    );
-
-    this.setState({ courses: courses });
+        this.setState({ courses: courses }, () => {
+          toast.success("Course deleted");
+        });
+      })
+      .catch(error => {
+        alert("Oops! Delete failed: " + error);
+      });
   };
 
   render() {
