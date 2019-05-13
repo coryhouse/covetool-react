@@ -23,19 +23,14 @@ class CoursePage extends React.Component {
     // const coursesCopy = Object.assign([], this.state.courses);
 
     // Option 2: Object spread
-    const courseCopy = [...this.state.courses];
+    // const courseCopy = [...this.state.courses];
 
     // Option 3: Just use filter.
     const courses = this.state.courses.filter(
       course => course.id !== parseInt(idToDelete)
     );
 
-    debugger;
-    // Goal: New courses array, that omits the course with the passed id.
-
-    // this.setState({ courses: })
-
-    // I need to know what course id to delete. How do I get that?
+    this.setState({ courses: courses });
   };
 
   render() {
