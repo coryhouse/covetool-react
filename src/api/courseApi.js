@@ -15,7 +15,7 @@ export function getCourseBySlug(slug) {
 }
 
 export function deleteCourse(courseId) {
-  return fetch(baseUrl + courseId, {
+  return fetch(baseUrl + "/" + courseId, {
     method: "DELETE"
   })
     .then(handleResponse)
