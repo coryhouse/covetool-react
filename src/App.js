@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomePage from "./HomePage";
 import CoursesPage from "./CoursesPage";
 import ManageCoursePage from "./ManageCoursePage";
@@ -12,9 +12,12 @@ function App() {
     <Router>
       <ToastContainer />
       <Nav />
-      <Route path="/" component={HomePage} exact />
-      <Route path="/courses" component={CoursesPage} />
-      <Route path="/course" component={ManageCoursePage} />
+      <Switch>
+        <Route path="/courses" component={CoursesPage} />
+        <Route path="/course/:slug" component={ManageCoursePage} />
+        <Route path="/course" component={ManageCoursePage} />
+        <Route path="/" component={HomePage} />
+      </Switch>
     </Router>
   );
 }

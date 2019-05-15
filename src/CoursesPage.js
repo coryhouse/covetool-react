@@ -1,5 +1,6 @@
 import React from "react";
 import { getCourses, deleteCourse } from "./api/courseApi";
+import { Redirect, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 class CoursePage extends React.Component {
@@ -8,7 +9,8 @@ class CoursePage extends React.Component {
 
     this.state = {
       courses: [],
-      isAdmin: false
+      isAdmin: false,
+      redirectToAddCourses: false
     };
 
     // Binding in the constructor
@@ -40,10 +42,18 @@ class CoursePage extends React.Component {
       });
   };
 
+  handleAddCourseClick = event => {
+    this.setState({ redirectToAddCourses: true });
+  };
+
   render() {
     return (
       <>
+        {this.state.redirectToAddCourses && <Redirect to="/course" />}
         <h1>Courses</h1>
+        <button type="button" onClick={this.handleAddCourseClick}>
+          Add Course
+        </button>
         <table>
           <thead>
             <tr>
@@ -64,7 +74,9 @@ class CoursePage extends React.Component {
                     Delete
                   </button>
                 </td>
-                <td>{course.title}</td>
+                <td>
+                  <Link to={`/course/${course.slug}`}>{course.title}</Link>
+                </td>
                 <td>{course.category}</td>
               </tr>
             ))}
