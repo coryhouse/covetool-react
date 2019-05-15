@@ -1,17 +1,30 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const TextInput = ({ id, label, name, value, onChange, error }) => {
+const TextInput = ({
+  id,
+  label,
+  name,
+  value,
+  onChange,
+  error,
+  placeholder
+}) => {
   return (
     <div>
-      <label htmlFor={id}>{label}</label>
-      <br />
+      {label && (
+        <>
+          <label htmlFor={id}>{label}</label> <br />
+        </>
+      )}
+
       <input
         type="text"
         id={id}
         name={name}
         value={value}
         onChange={onChange}
+        placeholder={placeholder}
       />
       {error && <div style={{ color: "red" }}>{error}</div>}
     </div>
@@ -24,7 +37,8 @@ TextInput.propTypes = {
   error: PropTypes.string,
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired
+  label: PropTypes.string.isRequired,
+  placeholder: PropTypes.string
 };
 
 export default TextInput;
